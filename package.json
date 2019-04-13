@@ -1,0 +1,25 @@
+{
+  "name": "brawl-stars-copy",
+  "version": "1.0.0",
+  "description": "A online version of brawl stars",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BobBobilion/Brawl-Stars-copy.git"
+  },
+  "keywords": [
+    "brawl",
+    "stars",
+    "io"
+  ],
+  "author": "Arthur Facredyn, Radin Ahmadizadeh",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BobBobilion/Brawl-Stars-copy/issues"
+  },
+  "homepage": "https://github.com/BobBobilion/Brawl-Stars-copy#readme"
+}
