@@ -18,6 +18,6 @@ function newConnection(socket){
     function onMouseMoved(data){
         console.log(data);
         socket.broadcast.emit('newPoint',data);
-    }
+}
 }
 

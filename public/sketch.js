@@ -1,7 +1,7 @@
 var socket;
 function setup() {
   createCanvas(800,800);
-  socket = io.connect('http://192.168.43.54:3000');
+  socket = io.connect('http://192.168.0.28:3000');
   socket.on('newPoint',newPoint);
   noStroke();
 }
