@@ -1,7 +1,8 @@
 var socket;
 function setup() {
+  print('http://'+ServerInfo['ip']+":"+ServerInfo['port']+'/');
   createCanvas(800,800);
-  socket = io.connect('http://localhost:3000');
+  socket = io.connect('http://'+ServerInfo['ip']+":"+ServerInfo['port']+'/');
   socket.on('newPoint',newPoint);
   noStroke();
 }
