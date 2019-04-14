@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/BobBobilion/Brawl-Stars-copy#readme",
   "dependencies": {
+    "express": "^4.16.4",
     "socket.io": "^2.2.0"
   }
 }
