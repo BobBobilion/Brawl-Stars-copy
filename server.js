@@ -1,9 +1,10 @@
 var express = require('express');
 
 var socket = require('socket.io');
+var port = 3000;
 
 var app = express();
-var server = app.listen(3000);
+var server = app.listen(port);
 app.use(express.static('public'));
 console.log("hello");
 
