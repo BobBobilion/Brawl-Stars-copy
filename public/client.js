@@ -1,4 +1,6 @@
 var socket;
+var height = 800;
+var width = 800;
 var tileSize = 100;
 var inPlayerSelection = true;
 var inGame = false;
@@ -8,8 +10,8 @@ var directions = {
   "down": 0,
   "right": 0,
   "left": 0,
-  "mouse": 0,
-  "click": 0
+  "mouseAngle": 0,
+  "click": false
 }
 var playerList = [
   'piper',//Blue
@@ -43,15 +45,24 @@ function RegisterPlayer(chosenPlayer){
   socket.emit("PlayerRegistered", this.chosenPlayer);
   inPlayerSelection = false;
 }
-function draw() {
+function draw() { //*****************************************************  DRAW  ******************************************************\\
   if(inPlayerSelection){
     drawPlayerSelection();
   }else if(inGame){
     DrawMap();
     CheckForMove();
+    socket.on('Draw',DrawCharacter);
+
     ReportToServer(directions)//sends all of the necessary stuff to the server
   }
+  console.log("i did");
 
+}
+
+function DrawCharacter(characterInfo){
+  fill(255);
+  console.log("drawing");
+  ellipse(characterInfo.xPos,characterInfo.yPos,tileSize/2,tileSize/2);
 }
 
 function drawPlayerSelection(){
@@ -95,27 +106,42 @@ function DrawMap(){
   }
 }
 
-function CheckForMove(){
-  if (keyIsDown(68)) {
+function CheckForMove(){//check to see what the user is pressing
+  if (keyIsDown(68)) {//d
     directions['left'] = 1;
+  }else{
+    directions['left'] = 0;
   }
-  if (keyIsDown(65)) {
+  if (keyIsDown(65)) {//a
     directions['right'] = 1;
+  }else{
+    directions['right'] = 0;
   }
-  if (keyIsDown(87)) {
+  if (keyIsDown(87)) {//w
     directions['up'] = 1;
+  }else{
+    directions['up'] = 0;
   }
-  if (keyIsDown(83)){
+  if (keyIsDown(83)){//s
     directions['down'] = 1;
+  }else{
+    directions['down'] = 0;
   }
 }
 
 function mouseClicked(){
   if(inGame){
-
+    this.angle = atan((mouseX-width/2)/(mouseY-height/2))+90;//get the angle of mouse relative to the player
+    if(mouseX < width/2){
+      directions['mouseAngle'] = this.angle+180;
+    }else{
+      directions['mouseAngle'] = this.angle;
+    }
+    directions['mouseClicked'] = true;
   }
 }
 
 function ReportToServer(directions){
   socket.emit("Directions", directions);
+  directions['mouseClicked'] = false;
 }

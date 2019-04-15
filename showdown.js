@@ -22,8 +22,20 @@ class Showdown{
 
    sendToAllPlayers(event, data){
     for(var i = 0; i<this.players.length; i++){
-      this.players[i]["socket"].emit(event,data)
+      this.players[i]["socket"].emit(event,data);
     }
   }
+
+  moveThem(){
+    this.i = 0;
+    for(i<this.players.length; i++;){
+      sockets.on('Directions',Move);
+      this.players[i]["socket"].emit('Draw',this.players[i]['characterObject']);
+    }
+    function Move(directions){
+      this.players[i]['characterObject'].move(directions);
+    }
+  }
+
 }
 module.exports = Showdown;

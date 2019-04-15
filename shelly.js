@@ -1,8 +1,8 @@
-class Piper {
+class Shelly {
   constructor(x, y) {
     this.health = 2000;
     this.damage = 2000;
-    this.range = 4;
+    this.range = 1;
     this.ms = 0.1;
     this.xPos = x;//location based on tile size (can be a fraction of a tile)
     this.yPos = y;
@@ -19,5 +19,4 @@ class Piper {
 
 }
 
-
-module.exports = Piper;
+module.exports = Shelly;
