@@ -5,25 +5,25 @@ var tileSize = 100;
 var inPlayerSelection = true;
 var inGame = false;
 var world;
-var directions = {
+var sceneInfo;
+var userInput = {
   'up': 0,
   "down": 0,
   "right": 0,
   "left": 0,
   "mouseAngle": 0,
   "click": false
-}
+};
 var playerList = [
   'piper',//Blue
   'colt',//Green
   'shelly'//Red
-]
+];
 var chosenPlayer = null;
 var serverLink;
 function setup() {
   serverLink = 'http://'+ServerInfo['ip']+":"+ServerInfo['port']+'/';
   createCanvas(800,800);
-
   noStroke();
 }
 
@@ -34,37 +34,52 @@ function ConnectToServer(serverLink){
 
 function hookUpSocket(socket){
   socket.on("GameCreated", GameInitialized);
+  socket.on('SceneUpdate',updateScene);
+  socket.on('WorldUpdate',updateWorld());
+}
+function updateScene(data){
+  sceneInfo = data;
+}
+function updateWorld(data){
+  world = data;
 }
 
 function GameInitialized(data){
   inGame = true;
-  world = data;
+  updateWorld(data);
 }
 function RegisterPlayer(chosenPlayer){
   ConnectToServer(serverLink);
   socket.emit("PlayerRegistered", this.chosenPlayer);
   inPlayerSelection = false;
 }
+
 function draw() { //*****************************************************  DRAW  ******************************************************\\
   if(inPlayerSelection){
     drawPlayerSelection();
   }else if(inGame){
     DrawMap();
-    CheckForMove();
-    socket.on('Draw',DrawCharacter);
-
-    ReportToServer(directions)//sends all of the necessary stuff to the server
+    DrawScene(sceneInfo);
+    UpdateUserInput();
+    ReportToServer(userInput)//sends all of the necessary stuff to the server
   }
-  console.log("i did");
-
 }
-
-function DrawCharacter(characterInfo){
-  fill(255);
-  console.log("drawing");
-  ellipse(characterInfo.xPos,characterInfo.yPos,tileSize/2,tileSize/2);
+function DrawScene(sceneInfo) {
+  // temporary drawing mechanism, will be fixed later;
+  // var self= sceneInfo["self"];
+  // fill(0);
+  // ellipse(self['xpos']*tileSize,self['ypos']*tileSize,tileSize/3, tileSize/3);
+  if(sceneInfo != null) {
+    var otherPlayers = sceneInfo["other players"];
+    if (otherPlayers != null) {
+      for (let i = 0; i < otherPlayers.length; i++) {
+        fill(255, 0, 0);
+        console.log(otherPlayers[i]['xpos'] + " - "+otherPlayers[i]['ypos']);
+        ellipse(otherPlayers[i]['xpos'], otherPlayers[i]['ypos'], tileSize / 3, tileSize / 3);
+      }
+    }
+  }
 }
-
 function drawPlayerSelection(){
   background(255);
   for(var i = 0; i < playerList.length; i++){
@@ -106,26 +121,26 @@ function DrawMap(){
   }
 }
 
-function CheckForMove(){//check to see what the user is pressing
+function UpdateUserInput(){//check to see what the user is pressing
   if (keyIsDown(68)) {//d
-    directions['left'] = 1;
+    userInput['left'] = 1;
   }else{
-    directions['left'] = 0;
+    userInput['left'] = 0;
   }
   if (keyIsDown(65)) {//a
-    directions['right'] = 1;
+    userInput['right'] = 1;
   }else{
-    directions['right'] = 0;
+    userInput['right'] = 0;
   }
   if (keyIsDown(87)) {//w
-    directions['up'] = 1;
+    userInput['up'] = 1;
   }else{
-    directions['up'] = 0;
+    userInput['up'] = 0;
   }
   if (keyIsDown(83)){//s
-    directions['down'] = 1;
+    userInput['down'] = 1;
   }else{
-    directions['down'] = 0;
+    userInput['down'] = 0;
   }
 }
 
@@ -133,15 +148,15 @@ function mouseClicked(){
   if(inGame){
     this.angle = atan((mouseX-width/2)/(mouseY-height/2))+90;//get the angle of mouse relative to the player
     if(mouseX < width/2){
-      directions['mouseAngle'] = this.angle+180;
+      userInput['mouseAngle'] = this.angle+180;
     }else{
-      directions['mouseAngle'] = this.angle;
+      userInput['mouseAngle'] = this.angle;
     }
-    directions['mouseClicked'] = true;
+    userInput['mouseClicked'] = true;
   }
 }
 
 function ReportToServer(directions){
-  socket.emit("Directions", directions);
+  socket.emit("UserInput", directions);
   directions['mouseClicked'] = false;
 }

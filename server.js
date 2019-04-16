@@ -11,7 +11,8 @@ var games = [];
 var socket = require('socket.io');
 var port = 3000;
 
-var characters = [Piper,Colt,Shelly];//DISCLAIMER: COMPLETELY EXPERIMENTAL. DONT SCREAM AT ME WHEN IT FAILS. this is a refrence to the actuall object
+// var characters = [Piper,Colt,Shelly];//DISCLAIMER: COMPLETELY EXPERIMENTAL. DONT SCREAM AT ME WHEN IT FAILS. this is a refrence to the actuall object
+var characters = [Piper,Piper,Piper]; //just for testing, only working on piper rn
 
 var app = express();
 var server = app.listen(port);
@@ -23,7 +24,7 @@ var io = socket(server);
 io.sockets.on('connection', newConnection);
 
 function ScanForPossibleGames(){
-  if(inMatchmaking.length == maxPlayers){
+  if(inMatchmaking.length === maxPlayers){
     console.log("GAME CREATED!");
     games.push(new Showdown(inMatchmaking));
     inMatchmaking = [];
@@ -39,15 +40,16 @@ function newConnection(socket){
         "socket":socket,
         "characterId": data,
         "characterObject": new characters[data](width/2,height/2)
-      }
+      };
       inMatchmaking.push(playerInfo);
       ScanForPossibleGames();
     }
   //socket.emit(label,data)
 }
-function draw() {
-  console.log("i ran");
+var mainLoop = setInterval(UpdateGames,15);
+function UpdateGames() {
+  // console.log("updated games");
   for(var i = 0; i<games.length;i++){
-    games[i].moveThem()
+    games[i].Update();
   }
 }

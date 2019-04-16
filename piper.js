@@ -6,16 +6,29 @@ class Piper {
     this.ms = 0.1;
     this.xPos = x;//location based on tile size (can be a fraction of a tile)
     this.yPos = y;
-    this.xRot;//rotation in degrees
-    this.yRot;
+    this.userInput;
+    // this.xRot;//rotation in degrees
+    // this.yRot;
   }
 
   move(directions){
-    this.xPos += directions.left*ms;
-    this.xPos -= directions.right*ms;
-    this.yPos += directions.down*ms;
-    this.yPos -= directions.up*ms;
+
+    if(directions != null) {
+      this.xPos += directions['left'] * this.ms;
+      this.xPos -= directions['right'] * this.ms;
+      this.yPos += directions['down'] * this.ms;
+      this.yPos -= directions['up'] * this.ms;
+    }
   }
+  UseUserInput(data){
+    constructor.userInput = data;
+    console.log(constructor.userInput)
+  }
+  Update(){
+    console.log(constructor.userInput);
+    this.move(constructor.userInput);
+    return {"xpos":this.xPos, "ypos":this.yPos};
+}
 
 }
 

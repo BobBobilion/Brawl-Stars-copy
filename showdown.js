@@ -18,24 +18,37 @@ class Showdown{
       [1,1,1,1,1,1,1,1]
     ];
     this.sendToAllPlayers("GameCreated", this.world);
+    this.HookUpPlayerInput();
   }
 
-   sendToAllPlayers(event, data){
+  sendToAllPlayers(event, data){
     for(var i = 0; i<this.players.length; i++){
       this.players[i]["socket"].emit(event,data);
     }
   }
 
-  moveThem(){
-    this.i = 0;
-    for(i<this.players.length; i++;){
-      sockets.on('Directions',Move);
-      this.players[i]["socket"].emit('Draw',this.players[i]['characterObject']);
-    }
-    function Move(directions){
-      this.players[i]['characterObject'].move(directions);
+  HookUpPlayerInput(){
+    for(var i = 0; i<this.players.length; i++){
+      this.players[i]["socket"].on("UserInput",this.players[i]["characterObject"].UseUserInput);
     }
   }
+
+  Update(){
+    var CharacterInfo = this.UpdateChars();
+    this.sendToAllPlayers("SceneUpdate", CharacterInfo);
+  }
+
+  UpdateChars(){
+    var charInfo = {
+      "other players":[]
+    }
+    for(var i = 0; i<this.players.length; i++){
+      var charSpecificInfo = this.players[i]['characterObject'].Update();
+      charInfo["other players"].push(charSpecificInfo);
+    }
+    return charInfo
+  }
+
 
 }
 module.exports = Showdown;

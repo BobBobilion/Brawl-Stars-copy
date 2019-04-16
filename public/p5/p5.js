@@ -75871,7 +75871,7 @@ p5.prototype.orbitControl = function(sensitivityX, sensitivityY) {
 /**
  * debugMode() helps visualize 3D space by adding a grid to indicate where the
  * ‘ground’ is in a sketch and an axes icon which indicates the +X, +Y, and +Z
- * directions. This function can be called without parameters to create a
+ * userInput. This function can be called without parameters to create a
  * default grid and axes icon, or it can be called according to the examples
  * above to customize the size and position of the grid and/or axes icon.  The
  * grid is drawn using the most recently set stroke color and weight.  To
@@ -79074,7 +79074,7 @@ p5.Geometry.prototype._edgesToVertices = function() {
     var dirAdd = dir.array();
     var dirSub = dir.array();
     // below is used to displace the pair of vertices at beginning and end
-    // in opposite directions
+    // in opposite userInput
     dirAdd.push(1);
     dirSub.push(-1);
     this.lineNormals.push(dirAdd, dirSub, dirAdd, dirAdd, dirSub, dirSub);
