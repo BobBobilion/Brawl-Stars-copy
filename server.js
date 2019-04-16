@@ -39,7 +39,9 @@ function newConnection(socket){
       var playerInfo = {
         "socket":socket,
         "characterId": data,
-        "characterObject": new characters[data](width/2,height/2)
+        // "characterObject": new characters[data](width/2,height/2)
+        "characterObject": new Piper(width/2,height/2)
+
       };
       inMatchmaking.push(playerInfo);
       ScanForPossibleGames();

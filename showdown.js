@@ -40,7 +40,8 @@ class Showdown{
 
   UpdateChars(){
     var charInfo = {
-      "other players":[]
+      "other players":[
+      ]
     }
     for(var i = 0; i<this.players.length; i++){
       var charSpecificInfo = this.players[i]['characterObject'].Update();
