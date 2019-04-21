@@ -1,3 +1,7 @@
+function print(text){
+  console.log(text);
+}
+
 class Showdown{
 
   //0 is ground
@@ -18,7 +22,7 @@ class Showdown{
       [1,1,1,1,1,1,1,1]
     ];
     this.sendToAllPlayers("GameCreated", this.world);
-    this.HookUpPlayerInput();
+    // this.HookUpPlayerInput();
   }
 
   sendToAllPlayers(event, data){
@@ -27,11 +31,11 @@ class Showdown{
     }
   }
 
-  HookUpPlayerInput(){
-    for(var i = 0; i<this.players.length; i++){
-      this.players[i]["socket"].on("UserInput",this.players[i]["characterObject"].UseUserInput);
-    }
-  }
+  // HookUpPlayerInput(){
+  //   for(var i = 0; i<this.players.length; i++){
+  //     this.players[i]["socket"].on("UserInput",this.players[i]["characterObject"].UseUserInput);
+  //   }
+  // }
 
   Update(){
     var CharacterInfo = this.UpdateChars();

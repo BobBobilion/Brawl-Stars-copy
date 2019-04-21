@@ -1,33 +1,42 @@
+function print(text){
+  console.log(text);
+}
+
+
 class Piper {
-  constructor(x, y) {
-    constructor.health = 2000;
-    constructor.damage = 2000;
-    constructor.range = 4;
-    constructor.ms = 0.1;
-    constructor.xPos = x;//location based on tile size (can be a fraction of a tile)
-    constructor.yPos = y;
-    constructor.userInput;
-    // constructor.xRot;//rotation in degrees
-    // constructor.yRot;
-  }
 
-  move(directions){
-
-    if(directions != null) {
-      constructor.xPos += directions['left'] * constructor.ms;
-      constructor.xPos -= directions['right'] * constructor.ms;
-      constructor.yPos += directions['down'] * constructor.ms;
-      constructor.yPos -= directions['up'] * constructor.ms;
-    }
+  constructor(x, y, socket) {
+    this.health = 2000;
+    this.damage = 2000;
+    this.range = 4;
+    this.ms = 0.03;
+    this.xPos = x;//location based on tile size (can be a fraction of a tile)
+    this.yPos = y;
+    this.userInput;
+    this.socket = socket;
+    this.socket.on("UserInput",(function(data) {this.UseUserInput(data)}).bind(this));
+    // this.xRot;//rotation in degrees
+    // this.yRot;
   }
   UseUserInput(data){
-    constructor.userInput = data;
-    console.log(constructor.userInput)
+    this.userInput = data;
+    print(this.userInput);
   }
+  move(directions){
+    if(directions != null) {
+      this.xPos += directions['left'] * this.ms;
+      this.xPos -= directions['right'] * this.ms;
+      this.yPos += directions['down'] * this.ms;
+      this.yPos -= directions['up'] * this.ms;
+    }
+  }
+  // UseUserInput(data){
+  //   this.userInput = 1;
+  // }
   Update(){
-    console.log(constructor.userInput);
-    this.move(constructor.userInput);
-    return {"xpos":constructor.xPos, "ypos":constructor.yPos};
+    print(this.userInput);
+    this.move(this.userInput);
+    return {"xpos":this.xPos, "ypos":this.yPos};
 }
 
 }

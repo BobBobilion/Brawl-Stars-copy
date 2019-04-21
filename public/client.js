@@ -1,3 +1,7 @@
+function print(text){
+  console.log(text);
+}
+
 var socket;
 var height = 800;
 var width = 800;
@@ -73,9 +77,9 @@ function DrawScene(sceneInfo) {
     var otherPlayers = sceneInfo["other players"];
     if (otherPlayers != null) {
       for (let i = 0; i < otherPlayers.length; i++) {
-        fill(255, 0, 0);
-        console.log(otherPlayers[i]['xpos'] + " - "+otherPlayers[i]['ypos']);
-        ellipse(otherPlayers[i]['xpos'], otherPlayers[i]['ypos'], tileSize / 3, tileSize / 3);
+        fill(255, 0, 0, 100);
+        // console.log(otherPlayers[i]['xpos'] + " - "+otherPlayers[i]['ypos']);
+        ellipse(otherPlayers[i]['xpos']*tileSize, otherPlayers[i]['ypos']*tileSize, tileSize / 3, tileSize / 3);
       }
     }
   }

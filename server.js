@@ -1,3 +1,7 @@
+function print(text){
+  console.log(text);
+}
+
 const Showdown = require('./showdown');
 const Piper = require('./piper');
 const Colt = require('./colt');
@@ -39,8 +43,8 @@ function newConnection(socket){
       var playerInfo = {
         "socket":socket,
         "characterId": data,
-        // "characterObject": new characters[data](width/2,height/2)
-        "characterObject": new Piper(width/2,height/2)
+        "characterObject": new characters[data](1.5,1.5, socket)
+        // "characterObject": new Piper(4,4, socket)
 
       };
       inMatchmaking.push(playerInfo);
