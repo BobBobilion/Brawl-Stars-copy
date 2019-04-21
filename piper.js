@@ -20,7 +20,7 @@ class Piper {
   }
   UseUserInput(data){
     this.userInput = data;
-    print(this.userInput);
+    // print(this.userInput);
   }
   move(directions){
     if(directions != null) {
@@ -34,7 +34,7 @@ class Piper {
   //   this.userInput = 1;
   // }
   Update(){
-    print(this.userInput);
+    // print(this.userInput);
     this.move(this.userInput);
     return {"xpos":this.xPos, "ypos":this.yPos};
 }
